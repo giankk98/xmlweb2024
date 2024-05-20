@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Configurar API Key{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Configurar API Key</h2>
+    <form action="{{ url_for('set_api') }}" method="POST">
+        <label for="api_key">Ingrese su API Key:</label>
+        <input type="text" id="api_key" name="api_key" required>
+        <div class="buttons-container">
+            <button type="submit">Guardar API Key</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

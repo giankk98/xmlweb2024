@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Iniciar Sesión{% endblock %}
+{% block content %}
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form action="{{ url_for('login') }}" method="POST">
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" name="usuario" required>
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" required>
+        <button type="submit">Iniciar Sesión</button>
+        <div id="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert-message {{ 'alert-' + category }} show">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </form>
+    <p><a href="{{ url_for('forgot_password') }}">¿Has olvidado tu contraseña?</a></p>
+</div>
+{% endblock %}

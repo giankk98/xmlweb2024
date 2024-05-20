@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Resultado del Análisis{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Resultado del Análisis</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Campos</th>
+                    <th>Datos</th>
+                    <th>País Banco</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for label, value, detail in analysis_result %}
+                <tr>
+                    <td>{{ label }}</td>
+                    <td>{{ value }}</td>
+                    {% if loop.index <= 3 %}
+                        <td>{{ detail }}</td>
+                    {% else %}
+                        <td style="border: none;"></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="buttons-container">
+        <form action="{{ url_for('generate_report') }}" method="POST" style="display: inline;">
+            <button type="submit" name="format" value="excel">Generar Informe Excel</button>
+        </form>
+        <form action="{{ url_for('generate_report') }}" method="POST" style="display: inline;">
+            <button type="submit" name="format" value="pdf">Generar Informe PDF</button>
+        </form>
+        <form action="{{ url_for('analyze') }}" method="GET" style="display: inline;">
+            <button type="submit">Nuevo Análisis</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

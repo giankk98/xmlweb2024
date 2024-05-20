@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Perfil de Usuario{% endblock %}
+{% block content %}
+<div class="container">
+    <div id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert-message {{ category }} show">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <h2>Perfil de Usuario</h2>
+    <div class="profile-section">
+        <form id="password-form" action="{{ url_for('update_password') }}" method="POST">
+            <label for="new_password">Nueva Contraseña:</label>
+            <input type="password" id="new_password" name="new_password">
+            <div class="buttons-container">
+                <button type="submit">Actualizar Contraseña</button>
+            </div>
+        </form>
+        <form id="api-form" action="{{ url_for('update_api') }}" method="POST">
+            <label for="api_key">API Key:</label>
+            <input type="text" id="api_key" name="api_key" value="{{ api_key }}">
+            <div class="buttons-container">
+                <button type="submit">Actualizar API Key</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

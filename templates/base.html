@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SWIFT-XML{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo">
+        <h1>SWIFT-XML</h1>
+        <nav>
+            {% if 'logged_in' in session %}
+                <a href="{{ url_for('logout') }}">Cerrar Sesión</a>
+                <a href="{{ url_for('profile') }}">Perfil</a>
+                {% if request.path != url_for('analyze') %}
+                    <a href="{{ url_for('analyze') }}">Analizar</a>
+                {% endif %}
+            {% endif %}
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </nav>
+    </header>
+    {% block content %}{% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleSwitch = document.getElementById('theme-toggle');
+            const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+            if (currentTheme) {
+                document.body.classList.add(currentTheme);
+                if (currentTheme === 'dark-mode') {
+                    toggleSwitch.checked = true;
+                }
+            }
+
+            toggleSwitch.addEventListener('change', function() {
+                if (toggleSwitch.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'default');
+                }
+            });
+
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.alert-message');
+                alerts.forEach(alert => {
+                    alert.classList.add('fade-out');
+                    alert.addEventListener('animationend', () => {
+                        alert.style.display = 'none';
+                    });
+                });
+            }, 5000); // Ocultar las alertas después de 5 segundos
+        });
+    </script>
+</body>
+</html>
